@@ -547,9 +547,20 @@ class AdvancedNarrativeIntelligence:
             }
             
             for method, keywords in all_keywords.items():
-                for i, keyword in enumerate(keywords):
+                # Ensure we only process valid, non-empty keywords
+                cleaned_keywords = []
+                for kw in keywords:
+                    # Skip missing values
+                    if isinstance(kw, (float, np.floating)) and np.isnan(kw):
+                        continue
+                    # Convert non-string keywords to strings
+                    cleaned_keywords.append(str(kw))
+
+                for i, keyword in enumerate(cleaned_keywords):
+                    if not keyword:
+                        continue
                     # Higher rank = higher score
-                    score = weights[method] * (len(keywords) - i) / len(keywords)
+                    score = weights[method] * (len(cleaned_keywords) - i) / len(cleaned_keywords)
                     keyword_scores[keyword.lower()] += score
             
             # Get top dynamic keywords
