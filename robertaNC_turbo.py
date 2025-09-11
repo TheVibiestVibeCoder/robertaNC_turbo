@@ -492,7 +492,7 @@ class AdvancedNarrativeIntelligence:
             if YAKE_AVAILABLE and self.yake_extractor:
                 try:
                     yake_keywords = self.yake_extractor.extract_keywords(combined_text)
-                    yake_words = [kw[1] for kw in yake_keywords[:15]]
+                    yake_words = [kw[0] for kw in yake_keywords[:15]]
                 except:
                     yake_words = []
             else:
@@ -589,7 +589,7 @@ class AdvancedNarrativeIntelligence:
             if YAKE_AVAILABLE and self.yake_extractor:
                 try:
                     keywords = self.yake_extractor.extract_keywords(text)
-                    return [kw[1] for kw in keywords[:20]]
+                    return [kw[0] for kw in keywords[:20]]
                 except:
                     return []
             else:
