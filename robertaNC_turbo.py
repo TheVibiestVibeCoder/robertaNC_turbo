@@ -199,10 +199,10 @@ class AdvancedNarrativeIntelligence:
             print(f"❌ Error loading enhanced models: {e}")
             raise
     
-    def load_and_preprocess_data(self):
-        """Enhanced data preprocessing with additional features"""
+    def load_and_preprocess_data(self, topic_filter=None):
+        """Enhanced data preprocessing with optional topic filtering"""
         print("\n📊 Enhanced Data Preprocessing...")
-        
+
         self.df = pd.read_csv(self.csv_path)
         print(f"  📈 {len(self.df)} articles loaded")
         
@@ -217,7 +217,7 @@ class AdvancedNarrativeIntelligence:
                 return [journalists_str] if journalists_str else []
         
         self.df['Journalists_List'] = self.df['Journalists'].apply(parse_journalists)
-        
+
         # Enhanced text features
         self.df['Full_Text'] = self.df['Headline'] + " " + self.df['Article'].fillna("")
         self.df['Text_Length'] = self.df['Full_Text'].str.len()
@@ -254,13 +254,23 @@ class AdvancedNarrativeIntelligence:
         self.df['Avg_Word_Length'] = self.df['Full_Text'].apply(
             lambda x: np.mean([len(word) for word in x.split()]) if x.split() else 0
         )
-        
+
+        # Optional topic filtering
+        if topic_filter:
+            if isinstance(topic_filter, str):
+                filter_expr = topic_filter
+            else:
+                filter_expr = '|'.join(topic_filter)
+            mask = self.df['Full_Text'].str.contains(filter_expr, case=False, na=False)
+            self.df = self.df[mask]
+            print(f"  🔍 Topic filter applied ({filter_expr}) - {len(self.df)} articles remaining")
+
         # Filter and clean
         initial_count = len(self.df)
         self.df = self.df[self.df['Text_Length'] > 50]
         self.df = self.df.dropna(subset=['Full_Text'])
         filtered_count = len(self.df)
-        
+
         print(f"  🧹 {initial_count - filtered_count} articles removed in cleaning")
         print(f"  ✅ {filtered_count} articles ready for analysis")
         
@@ -1287,8 +1297,39 @@ class AdvancedNarrativeIntelligence:
         print(f"     • {output_prefix}_dynamic_keywords.csv")
         print(f"     • Multiple embedding files (.npy)")
         print(f"     • enhanced_narrative_dashboard.html")
+
+    def situation_awareness_overview(self, top_n=5):
+        """Provide a concise overview of top narratives for quick situation awareness"""
+        if not getattr(self, 'narrative_summaries', None):
+            print("No narrative summaries available. Run analysis first.")
+            return
+
+        print("\n🔎 SITUATION AWARENESS OVERVIEW")
+        sorted_narratives = sorted(
+            self.narrative_summaries.items(),
+            key=lambda x: x[1]['basic_info']['size'],
+            reverse=True
+        )
+
+        for cluster_id, summary in sorted_narratives[:top_n]:
+            basic = summary['basic_info']
+            sentiments = summary['sentiment_analysis'].get('basic_sentiment', {})
+            dominant_sentiment = max(sentiments, key=sentiments.get) if sentiments else 'unknown'
+            actors = summary['actor_analysis'].get('all_actors', [])[:5]
+            keywords = summary['keywords_analysis'].get('unified_ranking', [])[:5]
+            headline = summary['top_headlines'].get('most_recent', [''])
+            example_headline = headline[0] if headline else ''
+
+            print(f"\n📌 Cluster {cluster_id} – {basic['narrative_type']}")
+            print(f"   Articles: {basic['size']} | Sentiment: {dominant_sentiment}")
+            if actors:
+                print(f"   Actors: {', '.join(actors)}")
+            if keywords:
+                print(f"   Keywords: {', '.join(keywords)}")
+            if example_headline:
+                print(f"   Example: {example_headline}")
     
-    def run_enhanced_analysis(self, sample_size=5000, min_cluster_size=5, temporal_window_days=7):
+    def run_enhanced_analysis(self, sample_size=5000, min_cluster_size=5, temporal_window_days=7, topic_filter=None):
         """Main method for enhanced narrative intelligence analysis"""
         print("🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM")
         print("=" * 80)
@@ -1299,7 +1340,7 @@ class AdvancedNarrativeIntelligence:
         try:
             # Phase 1: Data Processing
             print("\n🔥 PHASE 1: ENHANCED DATA PROCESSING")
-            self.load_and_preprocess_data()
+            self.load_and_preprocess_data(topic_filter=topic_filter)
             
             # Phase 2: Multi-Dimensional Embedding
             print("\n🔥 PHASE 2: MULTI-DIMENSIONAL EMBEDDING GENERATION")
@@ -1332,6 +1373,9 @@ class AdvancedNarrativeIntelligence:
             # Phase 9: Enhanced Export
             print("\n🔥 PHASE 9: ENHANCED EXPORT")
             self.export_enhanced_results()
+
+            # Final situation awareness summary
+            self.situation_awareness_overview()
             
             print("\n🎉 ENHANCED NARRATIVE INTELLIGENCE ANALYSIS COMPLETED!")
             print("\n📊 DELIVERABLES:")
@@ -1357,32 +1401,39 @@ class AdvancedNarrativeIntelligence:
             raise
 
 def main():
-    """Main function for Enhanced Narrative Intelligence Platform"""
-    CSV_PATH = r"C:\Users\schwi\OneDrive\Desktop\bloomberg_news_1000.csv"
-    
+    """Command line entry point for the narrative intelligence platform"""
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Advanced narrative intelligence analysis")
+    parser.add_argument("--csv", required=True, help="Path to CSV dataset")
+    parser.add_argument("--sample-size", type=int, default=5000, help="Maximum articles to analyze")
+    parser.add_argument("--min-cluster-size", type=int, default=5, help="Minimum cluster size")
+    parser.add_argument("--temporal-window-days", type=int, default=7, help="Temporal clustering window")
+    parser.add_argument("--topic", nargs="*", help="Optional keyword(s) to filter articles")
+    args = parser.parse_args()
+
     print("🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM")
     print("=" * 70)
     print("Next-Generation Narrative Analysis with:")
     print("• Dynamic Semantic Clustering")
-    print("• Multi-Dimensional Embeddings") 
+    print("• Multi-Dimensional Embeddings")
     print("• Advanced Sentiment & Emotion Analysis")
     print("• Context-Aware Keyword Extraction")
     print("• Comprehensive Intelligence Reports")
     print("=" * 70)
-    print(f"Dataset: {CSV_PATH}")
+    print(f"Dataset: {args.csv}")
+    if args.topic:
+        print(f"Topic filter: {', '.join(args.topic)}")
     print()
-    
+
     try:
-        # Initialize enhanced analyzer
-        analyzer = AdvancedNarrativeIntelligence(CSV_PATH)
-        
-        # Run comprehensive analysis
+        analyzer = AdvancedNarrativeIntelligence(args.csv)
         analyzer.run_enhanced_analysis(
-            sample_size=5000,  # Analyze up to 5000 articles
-            min_cluster_size=5,  # Minimum cluster size
-            temporal_window_days=7  # Temporal clustering window
+            sample_size=args.sample_size,
+            min_cluster_size=args.min_cluster_size,
+            temporal_window_days=args.temporal_window_days,
+            topic_filter=args.topic
         )
-        
     except Exception as e:
         print(f"\n❌ Critical Error: {e}")
         raise
