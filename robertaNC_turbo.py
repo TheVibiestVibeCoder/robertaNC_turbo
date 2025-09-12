@@ -102,7 +102,7 @@ class AdvancedNarrativeIntelligence:
         self.df = None
         self.embeddings = None
         self.clusters = None
-        
+
         # Enhanced data structures
         self.narrative_evolution = {}
         self.semantic_contexts = {}
@@ -111,6 +111,10 @@ class AdvancedNarrativeIntelligence:
         self.temporal_clusters = {}
         self.dynamic_keywords = {}
         self.narrative_genealogy = {}
+
+        # Determine compute device once for use across models
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.device_index = 0 if self.device == 'cuda' else -1
         
         print("🧠 Advanced Narrative Intelligence Platform")
         print("=" * 60)
@@ -123,18 +127,22 @@ class AdvancedNarrativeIntelligence:
             
             # Primary embedding model
             print("  🧠 Loading Sentence-BERT (all-MiniLM-L6-v2)...")
-            self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+            self.sentence_model = SentenceTransformer(
+                'all-MiniLM-L6-v2', device=self.device
+            )
             
             # Secondary embedding for semantic diversity
             print("  🔬 Loading domain-specific embedding model...")
-            self.domain_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+            self.domain_model = SentenceTransformer(
+                'sentence-transformers/all-mpnet-base-v2', device=self.device
+            )
             
             # Advanced sentiment with emotion detection
             print("  🎭 Loading multi-emotion sentiment pipeline...")
             self.emotion_pipeline = pipeline(
                 "text-classification",
                 model="j-hartmann/emotion-english-distilroberta-base",
-                device=0 if torch.cuda.is_available() else -1
+                device=self.device_index
             )
             
             # Financial sentiment (domain-specific)
@@ -143,7 +151,7 @@ class AdvancedNarrativeIntelligence:
                 self.financial_sentiment = pipeline(
                     "sentiment-analysis",
                     model="ProsusAI/finbert",
-                    device=0 if torch.cuda.is_available() else -1
+                    device=self.device_index
                 )
             except:
                 print("    ⚠️ FinBERT not available, using generic sentiment")
@@ -817,50 +825,50 @@ class AdvancedNarrativeIntelligence:
         """Multi-dimensional sentiment and emotion analysis"""
         print("\n🎭 Advanced Sentiment & Emotion Analysis...")
         
+        # Pre-truncate texts to model input limit for efficient batch processing
+        texts = [t[:512] for t in self.analysis_df['Full_Text']]
+
+        # Run emotion and financial sentiment pipelines in batches
+        try:
+            emotion_results = self.emotion_pipeline(
+                texts, batch_size=32, truncation=True
+            )
+        except Exception:
+            emotion_results = [{'label': 'neutral', 'score': 0.5} for _ in texts]
+
+        try:
+            financial_results = self.financial_sentiment(
+                texts, batch_size=32, truncation=True
+            )
+        except Exception:
+            financial_results = [{'label': 'neutral', 'score': 0.5} for _ in texts]
+
         sentiments = []
         emotions = []
         financial_sentiments = []
-        
-        for text in self.analysis_df['Full_Text']:
-            text_sample = text[:512]  # Model input limit
-            
-            # Basic sentiment using emotion pipeline
-            try:
-                emotion_result = self.emotion_pipeline(text_sample)[0]
-                # Map emotions to basic sentiment
-                emotion_label = emotion_result['label'].lower()
-                if emotion_label in ['joy', 'love', 'optimism']:
-                    sentiment_label = 'positive'
-                elif emotion_label in ['anger', 'fear', 'sadness', 'pessimism']:
-                    sentiment_label = 'negative'
-                else:
-                    sentiment_label = 'neutral'
-                
-                basic_sentiment = {
-                    'label': sentiment_label,
-                    'confidence': emotion_result['score']
-                }
-                emotion = {
-                    'emotion': emotion_result['label'],
-                    'confidence': emotion_result['score']
-                }
-            except:
-                basic_sentiment = {'label': 'neutral', 'confidence': 0.5}
-                emotion = {'emotion': 'neutral', 'confidence': 0.5}
-            
-            # Financial sentiment
-            try:
-                fin_sentiment = self.financial_sentiment(text_sample)[0]
-                financial_sentiment = {
-                    'label': fin_sentiment['label'].lower(),
-                    'confidence': fin_sentiment['score']
-                }
-            except:
-                financial_sentiment = {'label': 'neutral', 'confidence': 0.5}
-            
-            sentiments.append(basic_sentiment)
-            emotions.append(emotion)
-            financial_sentiments.append(financial_sentiment)
+
+        for emo, fin in zip(emotion_results, financial_results):
+            # Map emotions to a basic positive/negative/neutral sentiment
+            emotion_label = emo.get('label', 'neutral').lower()
+            if emotion_label in ['joy', 'love', 'optimism']:
+                sentiment_label = 'positive'
+            elif emotion_label in ['anger', 'fear', 'sadness', 'pessimism']:
+                sentiment_label = 'negative'
+            else:
+                sentiment_label = 'neutral'
+
+            sentiments.append({
+                'label': sentiment_label,
+                'confidence': emo.get('score', 0.5)
+            })
+            emotions.append({
+                'emotion': emo.get('label', 'neutral'),
+                'confidence': emo.get('score', 0.5)
+            })
+            financial_sentiments.append({
+                'label': fin.get('label', 'neutral').lower(),
+                'confidence': fin.get('score', 0.5)
+            })
         
         # Add to dataframe
         self.analysis_df['Sentiment_Label'] = [s['label'] for s in sentiments]
