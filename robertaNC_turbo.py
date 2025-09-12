@@ -116,7 +116,7 @@ class AdvancedNarrativeIntelligence:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.device_index = 0 if self.device == 'cuda' else -1
         
-        print("🧠 Advanced Narrative Intelligence Platform NEW")
+        print("🧠 Advanced Narrative Intelligence Platform NEW1")
         print("=" * 60)
         self.setup_enhanced_models()
         
