@@ -36,6 +36,7 @@ import spacy
 from collections import Counter, defaultdict, deque
 import re
 import ast
+from dataclasses import dataclass, field
 
 # Text analysis libraries
 try:
@@ -87,6 +88,22 @@ except ImportError:
     TEXTBLOB_AVAILABLE = False
     print("⚠️ TextBlob not available - will skip some text features")
 
+
+@dataclass
+class NarrativeCard:
+    """Lightweight container for narrative intelligence cards."""
+    narrative_title: str = ""
+    executive_summary: str = ""
+    key_actors: list = field(default_factory=list)
+    critical_facts: list = field(default_factory=list)
+    sentiment_trajectory: dict = field(default_factory=dict)
+    market_impact: str = ""
+    lifecycle_stage: str = ""
+    article_count: int = 0
+    importance_score: float = 0.0
+    sentiment_score: float = 0.0
+
+
 class AdvancedNarrativeIntelligence:
     """
     Enhanced Narrative Intelligence Platform with:
@@ -107,6 +124,8 @@ class AdvancedNarrativeIntelligence:
         self.narrative_evolution = {}
         self.semantic_contexts = {}
         self.actor_influence_matrix = None
+        self.narrative_cards = {}
+        self.narrative_network = None
         self.narrative_networks = {}
         self.temporal_clusters = {}
         self.dynamic_keywords = {}
@@ -887,9 +906,26 @@ class AdvancedNarrativeIntelligence:
         self.analysis_df['Emotion_Confidence'] = [e['confidence'] for e in emotions]
         self.analysis_df['Financial_Sentiment'] = [f['label'] for f in financial_sentiments]
         self.analysis_df['Financial_Confidence'] = [f['confidence'] for f in financial_sentiments]
-        
+
         print(f"  ✅ Multi-dimensional sentiment analysis complete")
-    
+
+    def generate_narrative_titles(self, cluster_id, cluster_data, keywords_info):
+        """Create descriptive narrative titles from keywords and context."""
+        keywords = keywords_info.get('unified_ranking', [])[:3]
+        if keywords:
+            title = ' '.join([k.title() for k in keywords])
+        else:
+            # Fallback to representative headline
+            title = cluster_data['Headline'].iloc[0][:60]
+        return title
+
+    def create_executive_summaries(self, cluster_data):
+        """Generate a simple two-sentence executive summary."""
+        text = cluster_data['Full_Text'].iloc[0]
+        sentences = re.split(r'(?<=[.!?])\s+', text)
+        summary = ' '.join(sentences[:2]).strip()
+        return summary
+
     def generate_enhanced_narrative_summaries(self):
         """Generate comprehensive narrative summaries with all insights"""
         print("\n📝 Generating Enhanced Narrative Summaries...")
@@ -909,6 +945,10 @@ class AdvancedNarrativeIntelligence:
             
             # Dynamic keywords
             keywords_info = self.dynamic_keywords.get(cluster_id, {})
+
+            # Generate narrative naming and summaries
+            narrative_title = self.generate_narrative_titles(cluster_id, cluster_data, keywords_info)
+            executive_summary = self.create_executive_summaries(cluster_data)
             
             # Actor analysis
             cluster_actors = set()
@@ -953,6 +993,8 @@ class AdvancedNarrativeIntelligence:
             
             summary = {
                 'cluster_id': cluster_id,
+                'narrative_title': narrative_title,
+                'executive_summary': executive_summary,
                 'basic_info': {
                     'size': cluster_size,
                     'date_range': date_range,
@@ -1218,8 +1260,198 @@ class AdvancedNarrativeIntelligence:
             sentiment_volatility = sentiment_by_day.std()
             if sentiment_volatility > 0.3:
                 insights.append("High sentiment volatility detected - market sentiment shifts rapidly, requires real-time monitoring")
-        
+
         return insights
+
+    # --- Narrative Intelligence Extensions ---
+
+    def build_actor_narrative_matrix(self):
+        """Create journalist -> narrative influence mapping"""
+        matrix = defaultdict(lambda: defaultdict(lambda: {'article_count': 0}))
+        for _, row in self.analysis_df.iterrows():
+            cluster_id = row.get('Cluster_Consensus', -1)
+            if cluster_id == -1:
+                continue
+            for journalist in row.get('Journalists_List', []):
+                if journalist and str(journalist) != 'nan':
+                    matrix[journalist][cluster_id]['article_count'] += 1
+        self.actor_influence_matrix = matrix
+        return matrix
+
+    def calculate_influence_scores(self):
+        """Multi-factor influence calculation (simplified)"""
+        scores = {}
+        if not self.actor_influence_matrix:
+            self.actor_influence_scores = scores
+            return scores
+        for journalist, clusters in self.actor_influence_matrix.items():
+            count = sum(info['article_count'] for info in clusters.values())
+            scores[journalist] = count
+        self.actor_influence_scores = scores
+        return scores
+
+    def identify_narrative_drivers(self):
+        """Find who initiates vs amplifies narratives (basic heuristic)"""
+        drivers = {'drivers': [], 'amplifiers': []}
+        for journalist, score in getattr(self, 'actor_influence_scores', {}).items():
+            if score > 1:
+                drivers['drivers'].append(journalist)
+            else:
+                drivers['amplifiers'].append(journalist)
+        self.narrative_drivers = drivers
+        return drivers
+
+    def create_narrative_cards(self):
+        """Construct NarrativeCard objects for each cluster"""
+        self.narrative_cards = {}
+        for cluster_id, summary in self.narrative_summaries.items():
+            card = NarrativeCard()
+            card.narrative_title = summary.get('narrative_title', f'Cluster {cluster_id}')
+            card.executive_summary = summary.get('executive_summary', '')
+            actors = summary['actor_analysis'].get('all_actors', [])
+            card.key_actors = actors[:5]
+            card.article_count = summary['basic_info']['size']
+            card.importance_score = float(card.article_count)
+            sentiments = summary['sentiment_analysis'].get('basic_sentiment', {})
+            card.sentiment_score = sentiments.get('positive', 0) - sentiments.get('negative', 0)
+            card.critical_facts = summary.get('keywords_analysis', {}).get('unified_ranking', [])[:5]
+            card.lifecycle_stage = 'Emerging'
+            self.narrative_cards[cluster_id] = card
+
+        # Update analysis_df with narrative context
+        self.analysis_df['Narrative_Title'] = self.analysis_df['Cluster_Consensus'].map(
+            lambda cid: self.narrative_cards.get(cid, NarrativeCard()).narrative_title
+        )
+        self.analysis_df['Actor_Influence'] = self.analysis_df['Journalists_List'].apply(
+            lambda actors: sum(self.actor_influence_scores.get(a, 0) for a in actors)
+            if isinstance(actors, list) else 0
+        )
+        self.analysis_df['Narrative_Stage'] = self.analysis_df['Cluster_Consensus'].map(
+            lambda cid: self.narrative_cards.get(cid, NarrativeCard()).lifecycle_stage
+        )
+
+    def create_narrative_dashboard(self):
+        """Replace technical dashboard with story-focused intelligence"""
+        print("\n📊 Creating Narrative Dashboard...")
+        fig = make_subplots(
+            rows=2, cols=3,
+            subplot_titles=[
+                'Active Narratives Map', 'Actor Influence Matrix', 'Sentiment Evolution',
+                'Narrative Network', 'Timeline Flow', 'Intelligence Summary'
+            ]
+        )
+        self.add_narrative_bubbles(fig, row=1, col=1)
+        self.add_influence_heatmap(fig, row=1, col=2)
+        self.add_sentiment_trajectories(fig, row=1, col=3)
+        self.add_narrative_network(fig, row=2, col=1)
+        self.add_narrative_timeline(fig, row=2, col=2)
+        self.add_intelligence_summary(fig, row=2, col=3)
+        fig.update_layout(height=800, width=1200, title_text='Narrative Intelligence Dashboard')
+        fig.write_html('enhanced_narrative_dashboard.html')
+        print("  ✅ Dashboard saved to enhanced_narrative_dashboard.html")
+
+    # Helper methods for narrative dashboard
+    def add_narrative_bubbles(self, fig, row, col):
+        for nid, card in self.narrative_cards.items():
+            fig.add_trace(
+                go.Scatter(
+                    x=[card.importance_score],
+                    y=[card.sentiment_score],
+                    mode='markers+text',
+                    marker_size=[max(card.article_count, 1) * 2],
+                    text=[card.narrative_title],
+                    name=card.narrative_title,
+                    hovertemplate=(f"<b>{card.narrative_title}</b><br>" +
+                                  f"{card.executive_summary}<br>" +
+                                  f"Articles: {card.article_count}<br>" +
+                                  f"Key Actors: {', '.join(card.key_actors[:3])}" +
+                                  "<extra></extra>")
+                ), row=row, col=col)
+        fig.update_xaxes(title_text='Importance', row=row, col=col)
+        fig.update_yaxes(title_text='Sentiment', row=row, col=col)
+
+    def add_influence_heatmap(self, fig, row, col):
+        if not self.actor_influence_matrix:
+            return
+        actors = list(self.actor_influence_matrix.keys())
+        narratives = sorted({cid for clusters in self.actor_influence_matrix.values() for cid in clusters.keys()})
+        data = np.zeros((len(actors), len(narratives)))
+        for i, actor in enumerate(actors):
+            for j, cid in enumerate(narratives):
+                data[i, j] = self.actor_influence_matrix[actor].get(cid, {}).get('article_count', 0)
+        fig.add_trace(go.Heatmap(z=data, x=[str(n) for n in narratives], y=actors, colorscale='Blues'), row=row, col=col)
+
+    def add_sentiment_trajectories(self, fig, row, col):
+        for cid, card in self.narrative_cards.items():
+            cluster_df = self.analysis_df[self.analysis_df['Cluster_Consensus'] == cid]
+            if 'Sentiment_Confidence' in cluster_df.columns and not cluster_df.empty:
+                traj = cluster_df.groupby(cluster_df['Date'].dt.date)['Sentiment_Confidence'].mean()
+                fig.add_trace(go.Scatter(x=list(traj.index), y=list(traj.values), mode='lines', name=card.narrative_title), row=row, col=col)
+
+    def add_narrative_network(self, fig, row, col):
+        G = nx.Graph()
+        for cid, card in self.narrative_cards.items():
+            G.add_node(cid, title=card.narrative_title, actors=set(card.key_actors))
+        cids = list(self.narrative_cards.keys())
+        for i in range(len(cids)):
+            for j in range(i + 1, len(cids)):
+                if set(self.narrative_cards[cids[i]].key_actors).intersection(self.narrative_cards[cids[j]].key_actors):
+                    G.add_edge(cids[i], cids[j])
+        pos = nx.spring_layout(G, seed=42) if len(G.nodes) > 0 else {}
+        edge_x, edge_y = [], []
+        for edge in G.edges():
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            edge_x += [x0, x1, None]
+            edge_y += [y0, y1, None]
+        if edge_x:
+            fig.add_trace(go.Scatter(x=edge_x, y=edge_y, mode='lines', line=dict(color='gray'), hoverinfo='none'), row=row, col=col)
+        if pos:
+            node_x = [pos[node][0] for node in G.nodes()]
+            node_y = [pos[node][1] for node in G.nodes()]
+            texts = [self.narrative_cards[node].narrative_title for node in G.nodes()]
+            fig.add_trace(go.Scatter(x=node_x, y=node_y, mode='markers+text', text=texts, hoverinfo='text'), row=row, col=col)
+
+    def add_narrative_timeline(self, fig, row, col):
+        for cid, card in self.narrative_cards.items():
+            cluster_df = self.analysis_df[self.analysis_df['Cluster_Consensus'] == cid]
+            if not cluster_df.empty:
+                counts = cluster_df.groupby(cluster_df['Date'].dt.date).size()
+                fig.add_trace(go.Scatter(x=list(counts.index), y=list(counts.values), mode='lines', name=card.narrative_title), row=row, col=col)
+
+    def add_intelligence_summary(self, fig, row, col):
+        table_data = []
+        for card in self.narrative_cards.values():
+            table_data.append([card.narrative_title, card.article_count, ', '.join(card.key_actors[:3])])
+        if table_data:
+            fig.add_trace(go.Table(
+                header=dict(values=['Narrative', 'Articles', 'Key Actors']),
+                cells=dict(values=[
+                    [d[0] for d in table_data],
+                    [d[1] for d in table_data],
+                    [d[2] for d in table_data]
+                ])
+            ), row=row, col=col)
+
+    def generate_situation_report(self):
+        """Create executive briefing format"""
+        print("\n🔍 NARRATIVE INTELLIGENCE BRIEFING")
+        print("=" * 60)
+        top_narratives = sorted(self.narrative_cards.items(), key=lambda x: x[1].importance_score, reverse=True)
+        for i, (nid, card) in enumerate(top_narratives[:5], 1):
+            print(f"\n{i}. {card.narrative_title}")
+            print(f"   📊 {card.article_count} articles | {card.lifecycle_stage}")
+            if card.key_actors:
+                print(f"   👥 Key Actors: {', '.join(card.key_actors[:3])}")
+            if card.executive_summary:
+                print(f"   📝 {card.executive_summary}")
+            if card.market_impact:
+                print(f"   💡 Impact: {card.market_impact}")
+            if card.critical_facts:
+                print(f"   🔑 Key Facts:")
+                for fact in card.critical_facts[:3]:
+                    print(f"      • {fact}")
+
     
     def export_enhanced_results(self, output_prefix="enhanced_narrative_intelligence"):
         """Export all enhanced analysis results"""
@@ -1361,14 +1593,20 @@ class AdvancedNarrativeIntelligence:
             # Phase 6: Enhanced Narrative Summaries
             print("\n🔥 PHASE 6: ENHANCED NARRATIVE SUMMARIES")
             self.generate_enhanced_narrative_summaries()
+
+            # Additional narrative intelligence layers
+            self.build_actor_narrative_matrix()
+            self.calculate_influence_scores()
+            self.identify_narrative_drivers()
+            self.create_narrative_cards()
             
             # Phase 7: Dashboard Creation
             print("\n🔥 PHASE 7: ENHANCED DASHBOARD CREATION")
-            self.create_simplified_dashboard()
-            
-            # Phase 8: Comprehensive Reporting
-            print("\n🔥 PHASE 8: COMPREHENSIVE REPORTING")
-            self.create_comprehensive_report()
+            self.create_narrative_dashboard()
+
+            # Phase 8: Situation Report
+            print("\n🔥 PHASE 8: SITUATION REPORT")
+            self.generate_situation_report()
             
             # Phase 9: Enhanced Export
             print("\n🔥 PHASE 9: ENHANCED EXPORT")
