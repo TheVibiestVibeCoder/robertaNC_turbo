@@ -1,218 +1,188 @@
-PLEASE DO THE FOLLOWING BELOW
+I get this error:
 
 
-# Narrative Intelligence Enhancement Specifications
+C:\Users\schwi>python C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py --csv "C:\Users\schwi\OneDrive\Desktop\bloomberg_news_1000.csv"
+🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM
+======================================================================
+Next-Generation Narrative Analysis with:
+• Dynamic Semantic Clustering
+• Multi-Dimensional Embeddings
+• Advanced Sentiment & Emotion Analysis
+• Context-Aware Keyword Extraction
+• Comprehensive Intelligence Reports
+======================================================================
+Dataset: C:\Users\schwi\OneDrive\Desktop\bloomberg_news_1000.csv
 
-## 🎯 Core Transformation: Cluster-Centric → Story-Centric
+🧠 Advanced Narrative Intelligence Platform NEW1
+============================================================
+📦 Loading Advanced Model Suite...
+  🧠 Loading Sentence-BERT (all-MiniLM-L6-v2)...
+  🔬 Loading domain-specific embedding model...
+  🎭 Loading multi-emotion sentiment pipeline...
+Device set to use cpu
+  💰 Loading financial sentiment analyzer...
+Device set to use cpu
+  🔑 Setting up advanced keyword extractors...
+  🏷️ Loading enhanced NER pipeline...
+  📝 Setting up adaptive TF-IDF...
+✅ Enhanced Model Suite Ready!
+🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM :)
+================================================================================
+Enhanced analysis with dynamic clustering, multi-dimensional actor networks,
+narrative evolution tracking, and comprehensive semantic context extraction
+================================================================================
 
-Replace technical clusters with narrative intelligence briefings. Each cluster becomes a named story with clear actors and implications.
+🔥 PHASE 1: ENHANCED DATA PROCESSING
 
-## 🚀 Critical Code Additions
+📊 Enhanced Data Preprocessing...
+  📈 5000 articles loaded
+  📖 Computing readability metrics...
+  🧹 0 articles removed in cleaning
+  ✅ 5000 articles ready for analysis
 
-### 1. Narrative Intelligence Cards
+🔥 PHASE 2: MULTI-DIMENSIONAL EMBEDDING GENERATION
 
-```python
-class NarrativeCard:
-    def __init__(self):
-        self.narrative_title = ""           # Auto-generated: "Fed Rate Hike Speculation" 
-        self.executive_summary = ""         # 2-sentence story overview
-        self.key_actors = []               # Top 3-5 journalists with influence scores
-        self.critical_facts = []           # 3-5 essential bullet points
-        self.sentiment_trajectory = {}     # Time-based sentiment evolution
-        self.market_impact = ""            # Business implications
-        self.lifecycle_stage = ""          # Emerging/Peak/Declining
+🧠 Multi-Dimensional Embedding Generation...
+  🎯 Analyzing all 5000 articles
+  ⚙️ Computing primary semantic embeddings...
+Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 157/157 [03:10<00:00,  1.21s/it]
+  🔬 Computing domain-specific embeddings...
+Batches:  91%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                    | 143/157 [31:03<01:4Batches:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                   | 144/157 [31:07<01:2Batches:  92%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎                 | 145/157 [31:12<01:1Batches:  93%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊                | 146/157 [31:16<00:5Batches:  94%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎              | 147/157 [31:19<00:4Batches:  94%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▊             | 148/157 [31:23<00:4Batches:  95%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏           | 149/157 [31:26<00:3Batches:  96%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋          | 150/157 [31:29<00:2Batches:  96%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▏        | 151/157 [31:33<00:2Batches:  97%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋       | 152/157 [31:36<00:1Batches:  97%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████      | 153/157 [31:39<00:1Batches:  98%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌    | 154/157 [31:41<00:0Batches:  99%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████   | 155/157 [31:44<00:0Batches:  99%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌ | 156/157 [31:46<00:0Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 157/157 [31:47<00:0Batches: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 157/157 [31:47<00:00, 12.15s/it]
+  📰 Computing headline embeddings...
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████| 157/157 [00:13<00:00, 11.35it/s]
+  📝 Computing adaptive TF-IDF features...
+  🔄 Creating hybrid embedding representations...
+  ✅ Multi-dimensional embeddings generated
+      Primary: (5000, 384)
+      Domain: (5000, 768)
+      Headlines: (5000, 384)
+      Hybrid: (5000, 1536)
 
-def generate_narrative_titles(self):
-    """Create descriptive titles from keywords + entities + context"""
-    # Use: top 3 keywords + dominant entity + temporal context
-    # Output: "Silicon Valley Bank Collapse Coverage", "Fed Hawkish Policy Shift"
+🔥 PHASE 3: DYNAMIC SEMANTIC CLUSTERING
 
-def create_executive_summaries(self):
-    """Generate 2-sentence story summaries"""
-    # Template: What happened + Why it matters
-    # Use extractive summarization from top articles
-```
+🔍 Dynamic Semantic Clustering...
+  🎯 Primary semantic clustering...
+  🔬 Domain-specific clustering...
+  📰 Headline-focused clustering...
+  ⏰ Temporal-semantic clustering...
+  🤝 Computing consensus clusters...
+  📊 Clustering Results:
+      Primary clusters: 159
+      Domain clusters: 444
+      Headline clusters: 443
+      Consensus clusters: 182
+      Noise articles: 3419
 
-### 2. Actor-Narrative Correlation Engine
+🔥 PHASE 4: DYNAMIC KEYWORD EXTRACTION
 
-```python
-def build_actor_narrative_matrix(self):
-    """Create journalist -> narrative influence mapping"""
-    influence_matrix = {}
-    for cluster_id in clusters:
-        for journalist in cluster_journalists:
-            influence_matrix[journalist][cluster_id] = {
-                'article_count': count,
-                'sentiment_influence': sentiment_impact,
-                'temporal_leadership': early_reporting_score,
-                'headline_prominence': headline_feature_score
-            }
-    return influence_matrix
+🔑 Dynamic Keyword Extraction...
+  ✅ Dynamic keywords extracted for 182 clusters
 
-def calculate_influence_scores(self):
-    """Multi-factor influence calculation"""
-    # Factors: article count (30%), early reporting (25%), 
-    # sentiment impact (25%), headline prominence (20%)
-    
-def identify_narrative_drivers(self):
-    """Find who initiates vs amplifies narratives"""
-    # Driver: reports early, sets tone
-    # Amplifier: follows, expands coverage
-```
+🔥 PHASE 5: MULTI-DIMENSIONAL SENTIMENT ANALYSIS
 
-### 3. Enhanced Dashboard Structure
+🎭 Advanced Sentiment & Emotion Analysis...
+  ✅ Multi-dimensional sentiment analysis complete
 
-```python
-def create_narrative_dashboard(self):
-    """Replace technical dashboard with story-focused intelligence"""
-    
-    # Layout: 2x3 grid
-    fig = make_subplots(
-        rows=2, cols=3,
-        subplot_titles=[
-            'Active Narratives Map', 'Actor Influence Matrix', 'Sentiment Evolution',
-            'Narrative Network', 'Timeline Flow', 'Intelligence Summary'
-        ]
-    )
-    
-    # 1. Active Narratives Map (replace cluster scatter)
-    self.add_narrative_bubbles(fig, row=1, col=1)
-    
-    # 2. Actor-Narrative Heatmap  
-    self.add_influence_heatmap(fig, row=1, col=2)
-    
-    # 3. Sentiment Evolution Lines
-    self.add_sentiment_trajectories(fig, row=1, col=3)
-    
-    # 4. Interactive Network (nodes=narratives, edges=shared actors)
-    self.add_narrative_network(fig, row=2, col=1)
-    
-    # 5. Temporal Flow
-    self.add_narrative_timeline(fig, row=2, col=2)
-    
-    # 6. Intelligence Cards Table
+🔥 PHASE 6: ENHANCED NARRATIVE SUMMARIES
+
+📝 Generating Enhanced Narrative Summaries...
+  ✅ Enhanced summaries generated for 182 narratives
+
+🔥 PHASE 7: ENHANCED DASHBOARD CREATION
+
+📊 Creating Narrative Dashboard...
+
+❌ Error during enhanced analysis: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (2, 3)
+
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
+Traceback (most recent call last):
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1605, in run_enhanced_analysis
+    self.create_narrative_dashboard()
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1348, in create_narrative_dashboard
     self.add_intelligence_summary(fig, row=2, col=3)
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1427, in add_intelligence_summary
+    fig.add_trace(go.Table(
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\graph_objs\_figure.py", line 900, in add_trace
+    return super(Figure, self).add_trace(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\basedatatypes.py", line 2108, in add_trace
+    return self.add_traces(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\graph_objs\_figure.py", line 980, in add_traces
+    return super(Figure, self).add_traces(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\basedatatypes.py", line 2238, in add_traces
+    self._set_trace_grid_position(trace, row, col, secondary_y)
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\basedatatypes.py", line 2330, in _set_trace_grid_position
+    return _set_trace_grid_reference(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\_subplots.py", line 1417, in _set_trace_grid_reference
+    raise ValueError(
+ValueError: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (2, 3)
 
-def add_narrative_bubbles(self, fig, row, col):
-    """Narrative overview with meaningful names"""
-    for narrative_id, card in self.narrative_cards.items():
-        fig.add_trace(go.Scatter(
-            x=[card.importance_score],
-            y=[card.sentiment_score], 
-            mode='markers+text',
-            marker_size=card.article_count*2,
-            text=card.narrative_title,
-            name=card.narrative_title,
-            hovertemplate=f"<b>{card.narrative_title}</b><br>" +
-                         f"{card.executive_summary}<br>" +
-                         f"Articles: {card.article_count}<br>" +
-                         f"Key Actors: {', '.join(card.key_actors[:3])}"
-        ), row=row, col=col)
-```
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
 
-### 4. Intelligence Reporting
+❌ Critical Error: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (2, 3)
 
-```python
-def generate_situation_report(self):
-    """Create executive briefing format"""
-    
-    print("🔍 NARRATIVE INTELLIGENCE BRIEFING")
-    print("="*60)
-    
-    # Sort by importance
-    top_narratives = sorted(self.narrative_cards.items(), 
-                           key=lambda x: x[1].importance_score, reverse=True)
-    
-    for i, (nid, card) in enumerate(top_narratives[:5], 1):
-        print(f"\n{i}. {card.narrative_title}")
-        print(f"   📊 {card.article_count} articles | {card.lifecycle_stage}")
-        print(f"   👥 Key Actors: {', '.join(card.key_actors[:3])}")  
-        print(f"   📝 {card.executive_summary}")
-        print(f"   💡 Impact: {card.market_impact}")
-        if card.critical_facts:
-            print(f"   🔑 Key Facts:")
-            for fact in card.critical_facts[:3]:
-                print(f"      • {fact}")
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
+Traceback (most recent call last):
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1680, in <module>
+    main()
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1669, in main
+    analyzer.run_enhanced_analysis(
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1605, in run_enhanced_analysis
+    self.create_narrative_dashboard()
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1348, in create_narrative_dashboard
+    self.add_intelligence_summary(fig, row=2, col=3)
+  File "C:\Users\schwi\Downloads\robertaNC_turbo\robertaNC_turbo.py", line 1427, in add_intelligence_summary
+    fig.add_trace(go.Table(
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\graph_objs\_figure.py", line 900, in add_trace
+    return super(Figure, self).add_trace(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\basedatatypes.py", line 2108, in add_trace
+    return self.add_traces(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\graph_objs\_figure.py", line 980, in add_traces
+    return super(Figure, self).add_traces(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\basedatatypes.py", line 2238, in add_traces
+    self._set_trace_grid_position(trace, row, col, secondary_y)
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\basedatatypes.py", line 2330, in _set_trace_grid_position
+    return _set_trace_grid_reference(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\schwi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\plotly\_subplots.py", line 1417, in _set_trace_grid_reference
+    raise ValueError(
+ValueError: Trace type 'table' is not compatible with subplot type 'xy'
+at grid position (2, 3)
 
-def export_intelligence_report(self):
-    """Export actionable intelligence document"""
-    # Generate HTML report with:
-    # - Executive dashboard screenshot
-    # - Top 10 narrative briefings  
-    # - Actor influence rankings
-    # - Strategic recommendations
-```
+See the docstring for the specs argument to plotly.subplots.make_subplots
+for more information on subplot types
 
-### 5. Required Method Modifications
+C:\Users\schwi>
 
-**Modify existing methods:**
 
-```python
-# IN: generate_enhanced_narrative_summaries()
-# ADD: Call generate_narrative_titles() and create_executive_summaries()
+Here is the problem:
 
-# IN: create_simplified_dashboard() 
-# REPLACE: With create_narrative_dashboard()
+Der Hauptfehler liegt in der make_subplots Spezifikation. Sie müssen explizit angeben, dass Position (2,3) einen "table" Typ haben soll. Hier sind die wichtigsten Fixes:
+🔧 Problemanalyse:
 
-# IN: create_comprehensive_report()
-# REPLACE: With generate_situation_report()
+Subplot-Spezifikation: Die specs in make_subplots waren nicht korrekt für Tabellen definiert
+Kompatibilität: go.Table() kann nicht zu einem xy-Subplot hinzugefügt werden
+Fehlerbehandlung: Fehlende Absicherung bei leeren Daten
 
-# ADD NEW: Main analysis method integration
-def run_enhanced_analysis(self):
-    # ... existing code ...
-    
-    # ADD AFTER phase 6:
-    self.build_actor_narrative_matrix()
-    self.calculate_influence_scores() 
-    self.create_narrative_cards()
-    
-    # MODIFY phase 7:
-    self.create_narrative_dashboard()  # Instead of create_simplified_dashboard()
-    
-    # MODIFY phase 8: 
-    self.generate_situation_report()   # Instead of create_comprehensive_report()
-```
+🚀 Lösungsschritte:
 
-### 6. Data Structure Updates
+Ersetzen Sie die problematischen Methoden mit dem korrigierten Code oben
+Die specs-Definition wurde geändert zu: [..., {"type": "table"}] für Position (2,3)
+Bessere Fehlerbehandlung für leere Datensätze hinzugefügt
 
-```python
-# ADD to __init__:
-self.narrative_cards = {}
-self.actor_influence_matrix = None
-self.narrative_network = None
 
-# MODIFY analysis_df to include:
-self.analysis_df['Narrative_Title'] = narrative_titles
-self.analysis_df['Actor_Influence'] = influence_scores
-self.analysis_df['Narrative_Stage'] = lifecycle_stages
-```
+---
 
-## 🎯 Implementation Checklist
-
-### Phase 1 - Core Transformation:
-- [ ] Create NarrativeCard class
-- [ ] Implement generate_narrative_titles()  
-- [ ] Build actor_influence_matrix
-- [ ] Replace dashboard with narrative-focused version
-- [ ] Update reporting to situation briefing format
-
-### Phase 2 - Advanced Features:
-- [ ] Add interactive narrative network
-- [ ] Implement sentiment trajectory tracking
-- [ ] Create HTML intelligence export
-- [ ] Add narrative lifecycle detection
-
-## 🔧 Key Integration Points
-
-1. **Keep existing data ingestion** - no changes to load_and_preprocess_data()
-2. **Keep all embedding/clustering logic** - enhance presentation layer only
-3. **Add narrative layer** - between clustering and dashboard creation
-4. **Replace all cluster references** in user-facing outputs with narrative titles
-5. **Maintain all export functionality** - enhance with narrative context
-
-## 📊 Expected Output Changes
-
-**Before**: "Cluster 7 has 23 articles about financial topics"
-**After**: "Fed Rate Hike Speculation - 23 articles over 4 days show growing hawkish sentiment. Led by Sarah Johnson (Bloomberg) and Mike Chen (WSJ). Market expecting 0.75% increase."
-
-This transforms your technical clustering tool into an actionable narrative intelligence platform.
+PLEASE PATCH THE FIX

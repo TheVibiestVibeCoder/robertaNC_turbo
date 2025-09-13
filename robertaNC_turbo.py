@@ -1563,7 +1563,7 @@ class AdvancedNarrativeIntelligence:
     
     def run_enhanced_analysis(self, sample_size=5000, min_cluster_size=5, temporal_window_days=7, topic_filter=None):
         """Main method for enhanced narrative intelligence analysis"""
-        print("🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM")
+        print("🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM :)")
         print("=" * 80)
         print("Enhanced analysis with dynamic clustering, multi-dimensional actor networks,")
         print("narrative evolution tracking, and comprehensive semantic context extraction")
