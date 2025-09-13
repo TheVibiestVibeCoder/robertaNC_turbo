@@ -1332,25 +1332,13 @@ class AdvancedNarrativeIntelligence:
 
     def create_narrative_dashboard(self):
         """Replace technical dashboard with story-focused intelligence"""
-        if hasattr(self, 'skip_dashboard') and self.skip_dashboard:
-            print("  ⏭️ Dashboard creation skipped")
-            return
         print("\n📊 Creating Narrative Dashboard...")
         fig = make_subplots(
-            rows=2,
-            cols=3,
+            rows=2, cols=3,
             subplot_titles=[
-                'Active Narratives Map',
-                'Actor Influence Matrix',
-                'Sentiment Evolution',
-                'Narrative Network',
-                'Timeline Flow',
-                'Intelligence Summary'
-            ],
-            specs=[
-                [{"type": "xy"}, {"type": "xy"}, {"type": "xy"}],
-                [{"type": "xy"}, {"type": "xy"}, {"type": "table"}]
-            ],
+                'Active Narratives Map', 'Actor Influence Matrix', 'Sentiment Evolution',
+                'Narrative Network', 'Timeline Flow', 'Intelligence Summary'
+            ]
         )
         self.add_narrative_bubbles(fig, row=1, col=1)
         self.add_influence_heatmap(fig, row=1, col=2)
@@ -1436,31 +1424,14 @@ class AdvancedNarrativeIntelligence:
         for card in self.narrative_cards.values():
             table_data.append([card.narrative_title, card.article_count, ', '.join(card.key_actors[:3])])
         if table_data:
-            fig.add_trace(
-                go.Table(
-                    header=dict(values=['Narrative', 'Articles', 'Key Actors']),
-                    cells=dict(
-                        values=[
-                            [d[0] for d in table_data],
-                            [d[1] for d in table_data],
-                            [d[2] for d in table_data],
-                        ]
-                    ),
-                ),
-                row=row,
-                col=col,
-            )
-        else:
-            fig.add_annotation(
-                text="No data available",
-                x=0.5,
-                y=0.5,
-                showarrow=False,
-                xref='x domain',
-                yref='y domain',
-                row=row,
-                col=col,
-            )
+            fig.add_trace(go.Table(
+                header=dict(values=['Narrative', 'Articles', 'Key Actors']),
+                cells=dict(values=[
+                    [d[0] for d in table_data],
+                    [d[1] for d in table_data],
+                    [d[2] for d in table_data]
+                ])
+            ), row=row, col=col)
 
     def generate_situation_report(self):
         """Create executive briefing format"""
@@ -1677,7 +1648,6 @@ def main():
     parser.add_argument("--min-cluster-size", type=int, default=5, help="Minimum cluster size")
     parser.add_argument("--temporal-window-days", type=int, default=7, help="Temporal clustering window")
     parser.add_argument("--topic", nargs="*", help="Optional keyword(s) to filter articles")
-    parser.add_argument("--skip-dashboard", action="store_true", help="Skip dashboard creation for faster testing")
     args = parser.parse_args()
 
     print("🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM")
@@ -1696,8 +1666,6 @@ def main():
 
     try:
         analyzer = AdvancedNarrativeIntelligence(args.csv)
-        if args.skip_dashboard:
-            analyzer.skip_dashboard = True
         analyzer.run_enhanced_analysis(
             sample_size=args.sample_size,
             min_cluster_size=args.min_cluster_size,

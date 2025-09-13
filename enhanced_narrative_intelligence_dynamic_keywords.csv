@@ -1,1 +1,222 @@
-
+cluster_id,extraction_method,keyword,score
+0,statistical,percent,0.45
+0,statistical,European Central Bank,0.0
+0,statistical,Central Bank,0.0
+0,statistical,bank,0.36000000000000004
+0,statistical,Futures Europe exchange,0.0
+0,statistical,York Mercantile Exchange,0.0
+0,statistical,Bloomberg Europe Banks,0.0
+0,statistical,European,0.0
+0,statistical,contact the editor,0.0
+0,statistical,ICE Futures Europe,0.0
+0,tfidf,percent,0.45
+0,tfidf,percent to,0.18666666666666668
+0,tfidf,said,0.17333333333333334
+0,tfidf,bank,0.36000000000000004
+0,tfidf,as,0.14666666666666667
+0,tfidf,european,0.26666666666666666
+0,tfidf,will,0.0
+0,tfidf,europe,0.0
+0,tfidf,since,0.0
+0,tfidf,from,0.0
+0,entities,dubai,0.15
+0,entities,tap,0.0
+0,entities,azerbaijan,0.0
+0,entities,u.k.,0.0
+0,entities,trace,0.0
+0,entities,new york,0.0
+0,entities,shares rally,0.0
+0,entities,saudi basic industries corp.,0.0
+0,entities,dsm,0.0
+0,entities,dic,0.0
+0,temporal,York Mercantile Exchange,0.0
+0,temporal,compiled by Bloomberg,0.0
+0,temporal,cents,0.0
+0,temporal,China,0.0
+0,temporal,Bloomberg,0.0
+0,temporal,week,0.0
+0,temporal,percent price growth,0.0
+0,temporal,percent this year,0.0
+1,statistical,China,0.0
+1,statistical,President Barack Obama,0.0
+1,statistical,China Cyber Attacks,0.0
+1,statistical,Obama,0.0
+1,statistical,Senate Republican national,0.0
+1,statistical,Senate,0.0
+1,statistical,Cyber Attacks,0.0
+1,statistical,National Security,0.0
+1,statistical,White House,0.0
+1,statistical,Attacks,0.0
+1,tfidf,cyber,0.2
+1,tfidf,attacks,0.3741666666666667
+1,tfidf,obama,0.49333333333333335
+1,tfidf,china,0.56
+1,tfidf,the united,0.14666666666666667
+1,tfidf,cybersecurity,0.0
+1,tfidf,united,0.0
+1,tfidf,currency,0.0
+1,tfidf,states,0.0
+1,tfidf,that,0.0
+1,entities,china,0.56
+1,entities,u.s.,0.13499999999999998
+1,entities,obama,0.49333333333333335
+1,entities,iran,0.0
+1,entities,lieberman,0.0
+1,entities,the united states,0.0
+1,entities,senate,0.30583333333333335
+1,entities,washington,0.0
+1,entities,u.s. banks cyber,0.0
+1,entities,joseph lieberman,0.0
+1,temporal,Republican national security,0.0
+1,temporal,attacks,0.3741666666666667
+1,temporal,security,0.0
+1,temporal,bill,0.0
+1,temporal,national security,0.18333333333333335
+1,temporal,North Korea,0.0
+1,temporal,Senate Commerce Committee,0.0
+1,temporal,Senate,0.0
+2,statistical,SPA Securities Ltd.,0.0
+2,statistical,Publisher WEB Service,0.0
+2,statistical,WEB Service Provider,0.0
+2,statistical,Financial Consultancy Services,0.0
+2,statistical,India Money Markets,0.0
+2,statistical,NVS Brokerage Ltd.,0.0
+2,statistical,Bloomberg Publisher WEB,0.0
+2,statistical,Trust Financial Consultancy,0.0
+2,statistical,LKP Securities Ltd.,0.0
+2,statistical,Securities Ltd.,0.0
+2,tfidf,india,0.2
+2,tfidf,web,0.18666666666666668
+2,tfidf,provider,0.17333333333333334
+2,tfidf,table,0.16000000000000003
+2,tfidf,provided,0.0
+2,tfidf,ltd,0.0
+2,tfidf,securities,0.0
+2,tfidf,money,0.0
+2,tfidf,service,0.0
+2,tfidf,trust,0.0
+2,entities,india money markets following,0.15
+2,entities,nvs brokerage ltd.,0.30166666666666664
+2,entities,spa securities ltd.,0.37
+2,entities,trust financial consultancy services,0.0
+2,entities,contributed,0.0
+2,entities,bloomberg publisher web service provider,0.0
+2,entities,pnb,0.0
+2,entities,companies,0.0
+2,entities,nvsb,0.0
+2,entities,obc,0.0
+2,temporal,SPAS,0.0
+2,temporal,table showing certificate,0.0
+2,temporal,RIL LIFE PEERL,0.0
+2,temporal,Money Market,0.0
+2,temporal,Indian Money Market,0.0
+2,temporal,WEB Service,0.0
+2,temporal,Income Money Market,0.0
+2,temporal,TFCS,0.0
+3,statistical,Cohen,0.0
+3,statistical,SEC,0.0
+3,statistical,SAC Capital Advisors,0.0
+3,statistical,SAC,0.0
+3,statistical,SEC Presses Supervision,0.0
+3,statistical,SAC Capital,0.0
+3,statistical,SEC ignores SAC,0.0
+3,statistical,insider trading,0.26666666666666666
+3,statistical,SAC fund managers,0.0
+3,statistical,Steve Cohen,0.0
+3,tfidf,sec,0.5833333333333334
+3,tfidf,cohen,0.5716666666666667
+3,tfidf,the sec,0.17333333333333334
+3,tfidf,sac,0.4650000000000001
+3,tfidf,insider,0.0
+3,tfidf,insider trading,0.26666666666666666
+3,tfidf,horvath,0.2616666666666667
+3,tfidf,steinberg,0.0
+3,tfidf,dell,0.18833333333333335
+3,tfidf,trading,0.0
+3,entities,sec,0.5833333333333334
+3,entities,cohen,0.5716666666666667
+3,entities,u.s.,0.0
+3,entities,sac,0.4650000000000001
+3,entities,steven a. cohen,0.0
+3,entities,michael steinberg,0.0
+3,entities,sac capital advisors lp,0.0
+3,entities,dell,0.18833333333333335
+3,entities,the u.s. securities and exchange commission,0.0
+3,entities,white,0.0
+3,temporal,Capital Advisors,0.0
+3,temporal,Capital,0.0
+3,temporal,Horvath,0.0
+3,temporal,SAC fund,0.0
+3,temporal,Steve Cohen,0.0
+3,temporal,fund,0.0
+3,temporal,SEC alleged,0.0
+3,temporal,Steinberg,0.0
+4,statistical,Blended Ground Beef,0.0
+4,statistical,Ground Beef Round,0.0
+4,statistical,Ground Beef Chuck,0.0
+4,statistical,Ground Beef,0.0
+4,statistical,Ground Beef Sirloin,0.0
+4,statistical,pounds Ground Beef,0.0
+4,statistical,Blended Ground,0.0
+4,statistical,top inside round,0.0
+4,statistical,Loin,0.0
+4,statistical,Round,0.0
+4,tfidf,00,0.2
+4,tfidf,loin,0.30333333333333334
+4,tfidf,chuck,0.19
+4,tfidf,bnls,0.16000000000000003
+4,tfidf,beef,0.0
+4,tfidf,ground beef,0.33333333333333337
+4,tfidf,im,0.0
+4,tfidf,rib,0.0
+4,tfidf,prices,0.0
+4,tfidf,pounds,0.0
+4,entities,bloomberg,0.15
+4,entities,the u.s. department of agriculture,0.0
+4,entities,usda,0.0
+4,entities,u.s.,0.0
+4,entities,omaha,0.0
+4,entities,nebraska,0.0
+4,entities,primal chuck,0.0
+4,entities,usda montana spot grain closing prices,0.0
+4,entities,information,0.0
+4,entities,montana,0.0
+4,temporal,percent ground beef,0.0
+5,statistical,Time’ Yang Yuanqing,0.0
+5,statistical,Jobs,0.0
+5,statistical,Steve Jobs,0.0
+5,statistical,Tel Aviv today,0.0
+5,statistical,Tel Aviv,0.0
+5,statistical,China,0.0
+5,statistical,Yang Yuanqing,0.0
+5,statistical,Time’ Yang,0.0
+5,statistical,percent,0.0
+5,statistical,Apple,0.0
+5,tfidf,apple,0.30000000000000004
+5,tfidf,jobs,0.42000000000000004
+5,tfidf,steve,0.30833333333333335
+5,tfidf,his,0.16000000000000003
+5,tfidf,helped,0.14666666666666667
+5,tfidf,app,0.0
+5,tfidf,he,0.0
+5,tfidf,internet,0.0
+5,tfidf,like,0.0
+5,tfidf,technology,0.0
+5,entities,apple inc.,0.15
+5,entities,steve,0.30833333333333335
+5,entities,hollywood,0.0
+5,entities,lenovo,0.0
+5,entities,steve jobs,0.30666666666666664
+5,entities,china,0.24166666666666664
+5,entities,u.s.,0.0
+5,entities,new york,0.0
+5,entities,tel aviv,0.21333333333333332
+5,entities,ebay,0.0
+5,temporal,Envisioned Steve,0.0
+5,temporal,Cue,0.0
+5,temporal,Veteran Cue Steers,0.0
+5,temporal,Cue Steers Company,0.0
+5,temporal,Jobs Envisioned,0.0
+5,temporal,Era Jobs,0.0
+5,temporal,Envisioned Steve Jobs,0.0
+5,temporal,Post-PC Era Jobs,0.0
