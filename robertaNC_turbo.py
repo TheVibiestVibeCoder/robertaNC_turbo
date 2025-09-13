@@ -1332,6 +1332,9 @@ class AdvancedNarrativeIntelligence:
 
     def create_narrative_dashboard(self):
         """Replace technical dashboard with story-focused intelligence"""
+        if hasattr(self, 'skip_dashboard') and self.skip_dashboard:
+            print("  ⏭️ Dashboard creation skipped")
+            return
         print("\n📊 Creating Narrative Dashboard...")
         fig = make_subplots(
             rows=2,
@@ -1345,7 +1348,7 @@ class AdvancedNarrativeIntelligence:
                 'Intelligence Summary'
             ],
             specs=[
-                [{"type": "xy"}, {"type": "heatmap"}, {"type": "xy"}],
+                [{"type": "xy"}, {"type": "xy"}, {"type": "xy"}],
                 [{"type": "xy"}, {"type": "xy"}, {"type": "table"}]
             ],
         )
@@ -1674,6 +1677,7 @@ def main():
     parser.add_argument("--min-cluster-size", type=int, default=5, help="Minimum cluster size")
     parser.add_argument("--temporal-window-days", type=int, default=7, help="Temporal clustering window")
     parser.add_argument("--topic", nargs="*", help="Optional keyword(s) to filter articles")
+    parser.add_argument("--skip-dashboard", action="store_true", help="Skip dashboard creation for faster testing")
     args = parser.parse_args()
 
     print("🧠 ENHANCED NARRATIVE INTELLIGENCE PLATFORM")
@@ -1692,6 +1696,8 @@ def main():
 
     try:
         analyzer = AdvancedNarrativeIntelligence(args.csv)
+        if args.skip_dashboard:
+            analyzer.skip_dashboard = True
         analyzer.run_enhanced_analysis(
             sample_size=args.sample_size,
             min_cluster_size=args.min_cluster_size,
