@@ -255,9 +255,39 @@ class SimpleThemeClustering:
             
             self.cluster_summaries[cluster_id] = summary
     
+    def generate_cluster_names(self):
+        """Generate descriptive names for clusters based on keywords"""
+        print("\nGenerating cluster names...")
+        
+        self.cluster_names = {}
+        
+        for cluster_id in np.unique(self.clusters[self.clusters >= 0]):
+            keywords = self.cluster_keywords.get(cluster_id, [])
+            
+            if len(keywords) >= 2:
+                # Use top 2-3 keywords to create a descriptive name
+                name = " & ".join(keywords[:2]).title()
+            elif len(keywords) == 1:
+                name = keywords[0].title()
+            else:
+                # Fallback to most common words in headlines
+                cluster_data = self.analysis_df[self.clusters == cluster_id]
+                headlines = ' '.join(cluster_data['Headline'].tolist()).lower()
+                words = re.findall(r'\b\w+\b', headlines)
+                common_words = [word for word, count in Counter(words).most_common(5) 
+                              if len(word) > 3 and word not in ['news', 'says', 'said', 'will', 'year']]
+                name = common_words[0].title() if common_words else f"Theme {cluster_id}"
+            
+            self.cluster_names[cluster_id] = name
+        
+        return self.cluster_names
+
     def visualize_clusters(self):
-        """Create visualization of the clusters"""
-        print("\nCreating cluster visualization...")
+        """Create enhanced visualization with context"""
+        print("\nCreating enhanced cluster visualization...")
+        
+        # Generate cluster names first
+        self.generate_cluster_names()
         
         # Reduce dimensions for visualization
         if UMAP_AVAILABLE:
@@ -275,32 +305,105 @@ class SimpleThemeClustering:
             method = "PCA"
         
         # Create the plot
-        plt.figure(figsize=(12, 8))
+        fig, ax = plt.subplots(figsize=(15, 10))
         
         # Plot each cluster with different colors
         unique_clusters = np.unique(self.clusters)
         colors = plt.cm.tab10(np.linspace(0, 1, len(unique_clusters)))
         
+        # Store points for hover functionality (simulated with annotations)
+        cluster_centers = {}
+        
         for cluster_id, color in zip(unique_clusters, colors):
+            mask = self.clusters == cluster_id
+            cluster_points = embeddings_2d[mask]
+            
             if cluster_id == -1:
                 # Noise points in grey
-                mask = self.clusters == cluster_id
-                plt.scatter(embeddings_2d[mask, 0], embeddings_2d[mask, 1], 
-                           c='lightgrey', alpha=0.6, s=50, label='Noise')
+                scatter = ax.scatter(cluster_points[:, 0], cluster_points[:, 1], 
+                                   c='lightgrey', alpha=0.6, s=50, label='Uncategorized')
             else:
-                mask = self.clusters == cluster_id
-                plt.scatter(embeddings_2d[mask, 0], embeddings_2d[mask, 1], 
-                           c=[color], alpha=0.7, s=60, label=f'Cluster {cluster_id}')
+                # Get cluster name
+                cluster_name = self.cluster_names.get(cluster_id, f"Theme {cluster_id}")
+                
+                # Plot cluster points
+                scatter = ax.scatter(cluster_points[:, 0], cluster_points[:, 1], 
+                                   c=[color], alpha=0.7, s=60, 
+                                   label=f'{cluster_name} ({len(cluster_points)} articles)')
+                
+                # Calculate cluster center for label placement
+                center_x = np.mean(cluster_points[:, 0])
+                center_y = np.mean(cluster_points[:, 1])
+                cluster_centers[cluster_id] = (center_x, center_y)
+                
+                # Add cluster name annotation at center
+                ax.annotate(cluster_name, 
+                          (center_x, center_y),
+                          xytext=(5, 5), textcoords='offset points',
+                          fontsize=10, fontweight='bold',
+                          bbox=dict(boxstyle='round,pad=0.3', facecolor=color, alpha=0.7),
+                          ha='center')
         
-        plt.title(f'Theme Clusters Visualization ({method})')
-        plt.xlabel(f'{method} Component 1')
-        plt.ylabel(f'{method} Component 2')
-        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        # Enhance the plot
+        ax.set_title(f'Article Clusters by Theme ({method} Visualization)', fontsize=16, fontweight='bold')
+        ax.set_xlabel(f'{method} Component 1', fontsize=12)
+        ax.set_ylabel(f'{method} Component 2', fontsize=12)
+        
+        # Customize legend
+        legend = ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+        legend.set_title("Clusters", prop={'size': 12, 'weight': 'bold'})
+        
         plt.tight_layout()
         plt.savefig('cluster_visualization.png', dpi=300, bbox_inches='tight')
         plt.show()
         
-        print("Visualization saved as 'cluster_visualization.png'")
+        # Create a second plot with article titles visible
+        self.create_detailed_visualization(embeddings_2d, method)
+        
+        print("Visualizations saved:")
+        print("- cluster_visualization.png (overview)")
+        print("- detailed_cluster_view.png (with article titles)")
+
+    def create_detailed_visualization(self, embeddings_2d, method):
+        """Create a detailed view showing individual article information"""
+        fig, ax = plt.subplots(figsize=(20, 12))
+        
+        unique_clusters = np.unique(self.clusters)
+        colors = plt.cm.tab10(np.linspace(0, 1, len(unique_clusters)))
+        
+        for cluster_id, color in zip(unique_clusters, colors):
+            mask = self.clusters == cluster_id
+            cluster_points = embeddings_2d[mask]
+            cluster_articles = self.analysis_df[mask]
+            
+            if cluster_id == -1:
+                ax.scatter(cluster_points[:, 0], cluster_points[:, 1], 
+                          c='lightgrey', alpha=0.6, s=30)
+            else:
+                cluster_name = self.cluster_names.get(cluster_id, f"Theme {cluster_id}")
+                ax.scatter(cluster_points[:, 0], cluster_points[:, 1], 
+                          c=[color], alpha=0.7, s=40, label=cluster_name)
+                
+                # Add article titles for smaller clusters (to avoid overcrowding)
+                if len(cluster_articles) <= 20:
+                    for i, (point, article) in enumerate(zip(cluster_points, cluster_articles.itertuples())):
+                        headline = article.Headline[:50] + "..." if len(article.Headline) > 50 else article.Headline
+                        ax.annotate(headline, 
+                                  (point[0], point[1]),
+                                  xytext=(5, 5), textcoords='offset points',
+                                  fontsize=8, alpha=0.8,
+                                  bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+        
+        ax.set_title(f'Detailed Article View ({method})', fontsize=16, fontweight='bold')
+        ax.set_xlabel(f'{method} Component 1', fontsize=12)
+        ax.set_ylabel(f'{method} Component 2', fontsize=12)
+        
+        legend = ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        legend.set_title("Themes", prop={'size': 12, 'weight': 'bold'})
+        
+        plt.tight_layout()
+        plt.savefig('detailed_cluster_view.png', dpi=300, bbox_inches='tight')
+        plt.close()  # Close to save memory
     
     def print_cluster_report(self):
         """Print a comprehensive report of all clusters"""
