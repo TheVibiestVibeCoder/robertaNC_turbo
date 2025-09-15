@@ -1,0 +1,11 @@
+cluster_id,size,date_range,avg_word_count,keywords,top_authors
+0,3,2012-09-19 to 2013-07-19,912.3333333333334,"barnes, noble, barnes noble, nook, books","Aoife White, Matt Townsend, Chelsey Dulaney"
+1,2,2012-09-19 to 2012-11-16,928.5,,"Naoko Fujimura, Mariko Yasu"
+2,5,2012-09-19 to 2012-12-03,754.6,"dell, windows, microsoft, percent, pc","Aaron Ricadela, Dina Bass, Niamh Ring"
+3,4,2011-10-06 to 2012-11-15,806.75,"index, yen, sony, tokyo, rose","Shani RajaYoshiaki Nohara, Yoshiaki Nohara, Mariko Yasu, Anuchit NguyenMaria Levitov"
+4,13,2011-10-06 to 2013-07-26,1022.3846153846154,"euros, spain, market, gains, corp","Michael P.ReganRita Nazareth, Grant SmithSarah Pringle, Sarah Pringle, Michael P.Regan, Nikolaj GammeltoftRita Nazareth"
+5,3,2012-09-21 to 2013-03-29,435.0,"rim, service, models, heins, percent","Amy ThomsonHugo Miller, Hugo Miller, Crayton Harrison"
+6,5,2011-10-06 to 2013-03-11,1257.0,"court, said, case, law, according","Victoria Slind-Flor, Susan Decker, Jun YangKarin Matussek"
+7,4,2011-10-07 to 2013-07-26,785.0,"samsung, won, smartphone, sales, share","Jun Yang, Peter Burrows, Tim Culpan, Bloomberg News"
+8,12,2011-10-06 to 2011-10-07,557.75,"world, said, death, ceo, company","Dina BassDouglas Mac MillanDanielle Kucera, Karen Gullo, Maria Wood, Julie Cruz, Stefan Nicola"
+9,4,2011-10-06 to 2011-10-06,178.75,"time, years, defined, chairman, yang","Mark Lee, Tim Culpan, Jun YangSaeromi Shin"
